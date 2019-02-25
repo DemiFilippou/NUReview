@@ -12,18 +12,20 @@ development:
   adapter: mysql2
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  username: <%= ENV["NUREVIEW_DB_USERNAME"] %>
-  password: <%= ENV["NUREVIEW_DB_PW"] %>
-  database: <%= ENV["NUREVIEW_DB_DEVELOPMENT"] %>
-  host: <%= ENV["NUREVIEW_DB_HOST"] %> 
-  port: <%= ENV["NUREVIEW_DB_PORT"] %> 
+  username: <%= ENV["NUREVIEW_DB_USERNAME_DEV"] %>
+  password: <%= ENV["NUREVIEW_DB_PW_DEV"] %>
+  database: <%= ENV["NUREVIEW_DB_DEV"] %>
+  host: <%= ENV["NUREVIEW_DB_HOST_DEV"] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: db/test.mysql2
+  database: <%= ENV["NUREVIEW_DB_TEST"] %>
+  username: <%= ENV["NUREVIEW_DB_USERNAME_DEV"] %>
+  password: <%= ENV["NUREVIEW_DB_PW_DEV"] %>
+  host: <%= ENV["NUREVIEW_DB_HOST_DEV"] %>
 
 production:
   <<: *default

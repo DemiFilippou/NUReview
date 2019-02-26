@@ -1,5 +1,3 @@
-require 'pry'
-
 class UsersController < ApplicationController
   before_action :find_user, only: [:update, :show]
   skip_before_action :authenticate, only: [:new, :create, :login]
@@ -58,7 +56,6 @@ class UsersController < ApplicationController
   end
 
   def give_token
-    binding.pry
     token = Auth.issue({user: @user.id})
     render json: {
       token: token

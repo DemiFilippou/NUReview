@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
   def index
     @tags = Tag.all
-    render json: @tags
+    render json: @tags, only: [:tag, :id]
   end
 
   private

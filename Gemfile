@@ -33,6 +33,9 @@ gem 'httparty'
 gem 'jwt'
 gem 'bcrypt'
 
+# for debugging
+gem 'pry', '~> 0.12.2'
+
 # cors
 gem 'rack-cors', :require => 'rack/cors'
 

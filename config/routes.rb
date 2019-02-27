@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   resources :users, only: [:create, :update]
   resources :tags, only: [:index]
 
+
+  resources :companies do
+    resources :reviews, only: [:create, :update, :index] 
+  end
+
   post 'login', to: 'users#login'
+  get '/search', to: 'companies#search'
 end
 

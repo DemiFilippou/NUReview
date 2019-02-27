@@ -1,15 +1,29 @@
 class ReviewsController < ApplicationController
   before_action :find, only: [:update, :show]
+
   def index
     @reviews = Review.where(company_id: params[:company_id])
     render json: @reviews, except: [:updated_at, :created_at]
+  end
+
+  def create
+    @review = Review.new(review_params.merge(
+      {
+       user: current_user,
+       company_id: params[:company_id]
+      }))
+    if @review.save
+      show
+    else
+        render json: {:errors => @review.errors.full_messages}
+    end
   end
 
   # update a user's review
   def update
     if @review.user == current_user
       if @review.update(review_params)
-        render json: @review, except: :created_at
+        show
       else
         render json: {:errors => @review.errors.full_messages}
       end
@@ -17,6 +31,10 @@ class ReviewsController < ApplicationController
     end
   end
   
+  def show
+    render json: @review, except: :created_at
+  end
+
   private
   def review_params
     params.require(:review).permit!

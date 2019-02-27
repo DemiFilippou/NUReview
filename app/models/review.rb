@@ -1,5 +1,5 @@
 class Review < ApplicationRecord
-    belongs_to :user, :class_name => "User", :foreign_key => "author_id"
+    belongs_to :user, :class_name => "User", :foreign_key => "user_id"
     belongs_to :company
     has_and_belongs_to_many :tags
     validates :position, presence: true
@@ -10,7 +10,8 @@ class Review < ApplicationRecord
     validates :recommend, presence: true
 
     ONE_TO_TEN = (1..10).to_a
-    enum enjoyment: ONE_TO_TEN
-    enum learning: ONE_TO_TEN
-    enum recommend: ONE_TO_TEN
+    enum enjoyment: ONE_TO_TEN, _prefix: true
+    enum learning: ONE_TO_TEN, _prefix: true
+    enum recommend: ONE_TO_TEN, _prefix: true
+
 end

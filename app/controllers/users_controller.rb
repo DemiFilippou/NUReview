@@ -1,5 +1,3 @@
-require 'pry'
-
 class UsersController < ApplicationController
   before_action :find_user, only: [:update, :show]
   skip_before_action :authenticate, only: [:new, :create, :login]
@@ -32,7 +30,6 @@ class UsersController < ApplicationController
   end
 
   def login
-    binding.pry
     @user = User.find_by(email: user_params[:email])
     if @user.nil?
       return render json: {

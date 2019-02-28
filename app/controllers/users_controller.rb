@@ -32,13 +32,14 @@ class UsersController < ApplicationController
   end
 
   def login
-    @user = User.find_by(email: login_params[:email])
+    binding.pry
+    @user = User.find_by(email: user_params[:email])
     if @user.nil?
       return render json: {
-        message: "Can't find user with email #{login_params[:email]}"
+        message: "Can't find user with email #{user_params[:email]}"
       }, status: 404
     end
-    if @user.authenticate(login_params[:password])
+    if @user.authenticate(user_params[:password])
       give_token
     else
       render json: {
@@ -50,10 +51,6 @@ class UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit([:name, :email, :password, :id])
-  end
-
-  def login_params
-    params.require(:user).require([:email, :password])
   end
 
   def find_user

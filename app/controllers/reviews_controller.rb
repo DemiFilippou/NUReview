@@ -1,11 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :find, only: [:update, :show]
 
-  def index
-    @reviews = Review.where(company_id: params[:company_id])
-    render json: @reviews, except: [:updated_at, :created_at]
-  end
-
   def create
     @review = Review.new(review_params.merge(
       {

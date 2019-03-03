@@ -3,6 +3,7 @@ class Review < ApplicationRecord
     belongs_to :company
     has_and_belongs_to_many :tags
     validates :position, presence: true
+    belongs_to :position
     validates :semester, presence: true
     validates :year, presence: true
     validates :enjoyment, presence: true

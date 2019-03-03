@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_26_191357) do
+ActiveRecord::Schema.define(version: 2019_03_03_011515) do
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -18,17 +18,10 @@ ActiveRecord::Schema.define(version: 2019_02_26_191357) do
     t.string "name"
   end
 
-  create_table "companies_tags", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "company_id"
-    t.bigint "tag_id"
-    t.index ["company_id"], name: "index_companies_tags_on_company_id"
-    t.index ["tag_id"], name: "index_companies_tags_on_tag_id"
-  end
-
   create_table "reviews", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "company_id"
-    t.string "body"
+    t.text "body"
     t.string "position"
     t.string "semester"
     t.integer "year"
@@ -38,8 +31,17 @@ ActiveRecord::Schema.define(version: 2019_02_26_191357) do
     t.boolean "anonymous"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "hourly_rate"
+    t.integer "score", default: 0
     t.index ["company_id"], name: "index_reviews_on_company_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "reviews_tags", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "review_id"
+    t.bigint "tag_id"
+    t.index ["review_id"], name: "index_reviews_tags_on_review_id"
+    t.index ["tag_id"], name: "index_reviews_tags_on_tag_id"
   end
 
   create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

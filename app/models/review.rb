@@ -8,10 +8,14 @@ class Review < ApplicationRecord
     validates :enjoyment, presence: true
     validates :learning, presence: true
     validates :recommend, presence: true
+    validates :hourly_rate, :numericality => { :greater_than_or_equal_to => 0 }, allow_blank: true
 
     ONE_TO_TEN = (1..10).to_a
     enum enjoyment: ONE_TO_TEN, _prefix: true
     enum learning: ONE_TO_TEN, _prefix: true
     enum recommend: ONE_TO_TEN, _prefix: true
 
+    def upvote
+
+    end
 end

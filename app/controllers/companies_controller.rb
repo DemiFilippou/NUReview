@@ -9,7 +9,7 @@ class CompaniesController < ApplicationController
     end
 
     @company_json = @company.as_json(
-      include: {:reviews => {include: {:user => {:only => [:name, :email, :id]}}}}
+      include: {:reviews => {include: {:user => {:only => [:name, :email, :id]}, :tags => {:only => [:tag, :id]}}}}, except: [:created_at, :updated_at]
     )
 
     # I don't like doing this but I am unaware of another way to conditionally render attributes in rails.

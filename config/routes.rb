@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   resources :users, only: [:create, :update]
   resources :tags, only: [:index]
   resources :positions, only: [:index, :create]
+  resources :reviews, only: [:create, :update] do
+    get 'upvote'
+    get 'downvote'
+  end
 
   resources :companies, only: [:show] do
     resources :reviews, only: [:create, :update] 

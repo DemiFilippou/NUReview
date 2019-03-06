@@ -1,16 +1,24 @@
 class ReviewsController < ApplicationController
-  before_action :find, only: [:update, :show]
+  before_action :find, only: [:update, :show, :upvote, :downvote]
 
   def create
-    @review = Review.new(review_params.merge(
-      {
-       user: current_user,
-       company_id: params[:company_id]
-      }))
+    if params[:company_id]
+      @review = Review.new(review_params.merge(
+        {
+          user: current_user,
+          company_id: params[:company_id]
+        }))
+    else
+      @review = Review.new(review_params.merge(
+        {
+          user: current_user
+        }))
+    end
+
     if @review.save
       show
     else
-        render json: {:errors => @review.errors.full_messages}
+      render json: {:errors => @review.errors.full_messages}
     end
   end
 
@@ -25,7 +33,33 @@ class ReviewsController < ApplicationController
       render json: { :errors => "You are not authorized to do this." }
     end
   end
-  
+
+  def upvote
+    if @review
+      @review.upvote
+      if @review.save
+        show
+      else
+        render json: {:errors => @review.errors.full_messages}
+      end
+    else
+      render json: {:errors => "No review found."}
+    end
+  end
+
+  def downvote
+    if @review
+      @review.downvote
+      if @review.save
+        show
+      else
+        render json: {:errors => @review.errors.full_messages}
+      end
+    else
+      render json: {:errors => "No review found."}
+    end
+  end
+
   def show
     render json: @review, except: :created_at
   end
@@ -36,6 +70,6 @@ class ReviewsController < ApplicationController
   end
 
   def find
-    @review = Review.find(params[:id])
+    @review = Review.find(params[:review_id])
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_03_202738) do
+ActiveRecord::Schema.define(version: 2019_03_05_030947) do
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2019_03_03_202738) do
     t.boolean "anonymous"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "hourly_rate"
+    t.integer "wage"
     t.integer "score", default: 0
     t.bigint "position_id"
     t.index ["company_id"], name: "index_reviews_on_company_id"

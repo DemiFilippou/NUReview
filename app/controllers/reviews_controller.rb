@@ -18,7 +18,7 @@ class ReviewsController < ApplicationController
     if @review.save
       show
     else
-      render json: {:errors => @review.errors.full_messages}
+      render json: {:errors => @review.errors.full_messages}, status: 422
     end
   end
 
@@ -28,9 +28,9 @@ class ReviewsController < ApplicationController
       if @review.update(review_params)
         show
       else
-        render json: {:errors => @review.errors.full_messages}
+        render json: {:errors => @review.errors.full_messages}, status: 422
       end
-      render json: { :errors => "You are not authorized to do this." }
+      render json: { :errors => "You are not authorized to do this." }, status: 401
     end
   end
 

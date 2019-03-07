@@ -14,7 +14,7 @@ class VotesController < ApplicationController
     if @vote.save
       render json: @vote, include: {:review => {:only => :score}}
     else
-      render json: {:errors => @vote.errors.full_messages}
+      render json: {:errors => @vote.errors.full_messages}, status: :error
     end
   end
 

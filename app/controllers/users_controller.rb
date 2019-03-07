@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     if @user.save
       give_token
     else
-      render status: :error, json: {
+      render status: 422, json: {
         message: @user.errors.full_messages
       }.to_json
     end

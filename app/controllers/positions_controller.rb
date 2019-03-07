@@ -9,7 +9,7 @@ class PositionsController < ApplicationController
     if @position.save
       render json: @position, only: [:id, :title]
     else
-        render json: {:errors => @position.errors.full_messages}
+        render json: {:errors => @position.errors.full_messages}, status: 422
     end
   end
   

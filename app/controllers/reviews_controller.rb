@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :find, only: [:update, :show, :upvote, :downvote]
+  before_action :find, only: [:update, :show]
 
   def create
     if params[:company_id]
@@ -31,32 +31,6 @@ class ReviewsController < ApplicationController
         render json: {:errors => @review.errors.full_messages}
       end
       render json: { :errors => "You are not authorized to do this." }
-    end
-  end
-
-  def upvote
-    if @review
-      @review.upvote
-      if @review.save
-        show
-      else
-        render json: {:errors => @review.errors.full_messages}
-      end
-    else
-      render json: {:errors => "No review found."}
-    end
-  end
-
-  def downvote
-    if @review
-      @review.downvote
-      if @review.save
-        show
-      else
-        render json: {:errors => @review.errors.full_messages}
-      end
-    else
-      render json: {:errors => "No review found."}
     end
   end
 

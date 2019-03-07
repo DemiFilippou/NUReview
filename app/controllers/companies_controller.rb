@@ -8,19 +8,9 @@ class CompaniesController < ApplicationController
       }, status: 404
     end
 
-    @company_json = @company.as_json(
+    @company_json = @company.as_json(:current_user => current_user,
       include: {:reviews => {include: {:user => {:only => [:name, :email, :id]}, :tags => {:only => [:tag, :id]}, :position => {:only => [:title, :id]}}}}, except: [:created_at, :updated_at]
     )
-
-    # I don't like doing this but I am unaware of another way to conditionally render attributes in rails.
-    # This is to protect anonymity - we only want to pass user info over the network if the review isn't anonymous
-    # It'd be nice to revisit this and look for a better solution
-    @company_json['reviews'].each do |review|
-      if review['anonymous']
-        review.delete("user_id")
-        review.delete("user")
-      end
-    end
 
     render json: @company_json
   end

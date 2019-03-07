@@ -8,7 +8,7 @@ class Review < ApplicationRecord
   validates :position, presence: true
   belongs_to :position
   validates :semester, presence: true
-  validates :year, presence: true
+  validates :year, presence: true, :numericality => { :greater_than_or_equal_to => 2000, :less_than_or_equal_to => Time.current.year }
   validates :enjoyment, presence: true
   validates :learning, presence: true
   validates :recommend, presence: true

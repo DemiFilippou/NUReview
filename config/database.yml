@@ -29,4 +29,7 @@ test:
 
 production:
   <<: *default
-  database: db/production.mysql2
+  username: <%= ENV["NUREVIEW_DB_USERNAME"] %>
+  password: <%= ENV["NUREVIEW_DB_PW"] %>
+  database: <%= ENV["NUREVIEW_DB"] %>
+  host: <%= ENV["NUREVIEW_DB_HOST"] %>

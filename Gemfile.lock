@@ -89,6 +89,7 @@ GEM
     i18n (1.5.3)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
+    irb (1.0.0)
     jbuilder (2.8.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -219,6 +220,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   enumerize
   httparty
+  irb
   jbuilder (~> 2.5)
   jwt
   listen (>= 3.0.5, < 3.2)
@@ -241,4 +243,4 @@ RUBY VERSION
    ruby 2.6.1p33
 
 BUNDLED WITH
-   1.17.2
+   2.0.1

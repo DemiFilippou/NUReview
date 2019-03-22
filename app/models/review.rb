@@ -13,7 +13,7 @@ class Review < ApplicationRecord
   validates :learning, presence: true
   validates :recommend, presence: true
   validates :wage, :numericality => { :greater_than_or_equal_to => 0 }, allow_blank: true
-  validates :enjoyment, :learning, :recommend, :numericality => { :only_integer => true, :greater_than_or_equal_to => 1, :less_than_or_equal_to => 10 }, allow_blank: true
+  validates :enjoyment, :learning, :recommend, :numericality => { :only_integer => true, :greater_than_or_equal_to => 1, :less_than_or_equal_to => 5 }, allow_blank: true
 
   # users automatically upvote their own post
   after_create :upvote_post
@@ -21,7 +21,6 @@ class Review < ApplicationRecord
   enumerize :semester, in: [:Spring, :Fall, :Summer]
 
   def upvote_post
-    binding.pry
     Vote.create(user_id: self.user_id, review_id: self.id, value: 1)
   end
 

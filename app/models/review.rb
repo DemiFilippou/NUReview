@@ -27,6 +27,7 @@ class Review < ApplicationRecord
   # total upvotes/downvotes score
   def recalculate_score(incoming_score)
     update(score: (votes.sum(:value) + incoming_score))
+    self.user.update(total_upvotes: (self.user.reviews.sum(:score)))
   end
 
   def user_vote(current_user)

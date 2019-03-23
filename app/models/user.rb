@@ -7,5 +7,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true,
     format: { with: /\b[A-Z0-9._%a-z\-]+@husky\.neu\.edu\z/,
               message: "must be @husky.neu.edu" }
-  validates :password, length: { in: 6..20 }, presence: true
+  validates :password, length: { in: 6..20, on: create }, presence: { on: create }
+
 end

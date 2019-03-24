@@ -35,7 +35,18 @@ class ReviewsController < ApplicationController
   end
 
   def show
-    render json: @review, except: :created_at
+    @review_json = @review.as_json(:current_user => current_user, include: {:user => {:only => [:name, :email, :id, :total_upvotes]}, :tags => {:only => [:tag, :id]}, :position => {:only => [:title, :id]}})
+    render json: @review_json
+  end
+
+  def index
+    @reviews =     
+      if params[:position_id]
+        Review.all.where(company_id: params[:company_id], position: params[:position_id])
+      else
+        Review.all.where(company_id: params[:company_id])
+      end
+    render json: @reviews, :current_user => current_user, include: {:user => {:only => [:name, :email, :id, :total_upvotes]}, :tags => {:only => [:tag, :id]}, :position => {:only => [:title, :id]}}
   end
 
   private

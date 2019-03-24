@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :votes, only: [:create]
 
   resources :companies, only: [:show] do
-    resources :reviews, only: [:create, :update] 
+    resources :reviews, only: [:create, :update, :index] 
   end
 
   post 'login', to: 'users#login'

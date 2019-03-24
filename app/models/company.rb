@@ -13,18 +13,18 @@ class Company < ApplicationRecord
     @company_json = super
     @user = options[:current_user]
 
-    if @user
-      @company_json['reviews'].each do |review|
-        @review = Review.find(review['id'])
-        review['user_vote'] = @review.user_vote(@user)
-
-        if review['anonymous']
-          review.delete("user_id")
-          review.delete("user")
-          review["user"] = {total_upvotes: @user.total_upvotes}
-        end
-      end
+    unless @user
+      return @company_json
     end
+
+    reviews_json = []
+    @company_json['reviews'].each do |review|
+      @review = Review.find(review['id'])
+      reviews_json << @review.as_json(:current_user => @user, include: options[:include][:reviews][:include])
+    end
+
+    @company_json.delete('reviews')
+    @company_json['reviews'] = reviews_json
 
     @company_json
   end

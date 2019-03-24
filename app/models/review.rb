@@ -38,4 +38,25 @@ class Review < ApplicationRecord
       0
     end
   end
+
+    # in the future i would like to change how this is serialized completely to avoid
+  # manipulating the JSON and doing extra queries, but for now this will have to do
+  def as_json(options = { })
+    @review_json = super
+    @user = options[:current_user]
+    unless @user
+      return @review_json
+    end
+
+    @review = Review.find(@review_json['id'])
+    @review_json['user_vote'] = @review.user_vote(@user)
+
+    if @review_json['anonymous']
+      @review_json.delete("user_id")
+      @review_json.delete("user")
+      @review_json["user"] = {total_upvotes: @user.total_upvotes}
+    end
+
+    @review_json
+  end
 end

@@ -9,7 +9,7 @@ class CompaniesController < ApplicationController
     end
 
     @company_json = @company.as_json(:current_user => current_user,
-      include: {:reviews => {include: {:user => {:only => [:name, :email, :id]}, :tags => {:only => [:tag, :id]}, :position => {:only => [:title, :id]}}}}, except: [:created_at, :updated_at]
+      include: {:reviews => {include: {:user => {:only => [:name, :email, :id, :total_upvotes]}, :tags => {:only => [:tag, :id]}, :position => {:only => [:title, :id]}}}}, except: [:created_at, :updated_at]
     )
 
     render json: @company_json

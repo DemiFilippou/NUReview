@@ -21,10 +21,10 @@ class Company < ApplicationRecord
         if review['anonymous']
           review.delete("user_id")
           review.delete("user")
+          review["user"] = {total_upvotes: @user.total_upvotes}
         end
       end
     end
-
 
     @company_json
   end

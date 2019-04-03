@@ -43,18 +43,19 @@ class Review < ApplicationRecord
   # manipulating the JSON and doing extra queries, but for now this will have to do
   def as_json(options = { })
     @review_json = super
-    @user = options[:current_user]
-    unless @user
+    @current_user = options[:current_user]
+    unless @current_user
       return @review_json
     end
 
     @review = Review.find(@review_json['id'])
-    @review_json['user_vote'] = @review.user_vote(@user)
+    @review_json['user_vote'] = @review.user_vote(@current_user)
 
     if @review_json['anonymous']
+      author_total_upvotes = @review_json["user"]["total_upvotes"]
       @review_json.delete("user_id")
       @review_json.delete("user")
-      @review_json["user"] = {total_upvotes: @user.total_upvotes}
+      @review_json["user"] = {total_upvotes: author_total_upvotes}
     end
 
     @review_json
